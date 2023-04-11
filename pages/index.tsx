@@ -5,17 +5,18 @@ import Head from 'next/head'
 import Title from '@/components/Title'
 import { ReactNode } from 'react'
 import { GetStaticProps } from 'next'
-import { getProducts } from '@/lib/products'
+import { getProducts, Product } from '@/lib/products'
 import Link from 'next/link'
+import ProductCard from '@/components/ProductCard'
 
 // const products = [
 //   { id: 1, title: 'title 1' },
 //   { id: 2, title: 'title 2' },
 // ]
 
-export interface Product {
-  id: number, title: string
-}
+// export interface Product {
+//   id: number, title: string
+// }
 interface HomePageProps {
   products: Product[];
 }
@@ -43,10 +44,11 @@ export default function Home(props: HomePageProps) {
       </Head>
       <main className="px-6 py-4">
         <Title>Next Shop</Title>
-        <ul>
+        <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
           {products.map((product: Product): ReactNode => {
             return (<li key={product.id}>
-              <Link href={`/products/${product.id}`}>{product.title}</Link>
+              {/* <Link href={`/products/${product.id}`}>{product.title}</Link> */}
+              <ProductCard {...product} />
             </li>)
 
           })}

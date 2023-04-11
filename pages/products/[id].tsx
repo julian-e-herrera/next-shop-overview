@@ -33,18 +33,19 @@ export const getStaticPaths: GetStaticPaths<ProductPageParams> = async () => {
 
 
 
-export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams> = async (props) => {
-  const { params } = props
-  let fallbackProd: Product = {
-    id: 0,
-    title: '',
-    description: '',
-    price: '',
-    pictureUrl: '',
-  }
+export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams> = async ({ params }) => {
+  const productId: string = params?.id || '';
+  // const { params } = props
+  // let fallbackProd: Product = {
+  //   id: 0,
+  //   title: '',
+  //   description: '',
+  //   price: '',
+  //   pictureUrl: '',
+  // }
 
   try {
-    const product = params ? await getProduct(params.id) : fallbackProd;
+    const product = await getProduct(productId) // params ? await getProduct(params.id) : fallbackProd;
 
     return {
       props: { product },

@@ -9,7 +9,7 @@ export interface Product {
   title: string;
   description: string;
   price: string;
-  pictureUrl: string;
+  pictureUrl:string;
 }
 
 // export async function getProduct(id: string): Promise<Product> {
@@ -26,19 +26,21 @@ export async function getProducts(): Promise<Product[]> {
   return products.map(stripProduct);
 }
 
-export function stripProduct(product:Product): Product {
+export function stripProduct(product: any) {
+  
   return {
     id: product.id,
     title: product.title,
     description: product.description,
     price: '$' + product.price,
-    pictureUrl: CMS_URL + product.pictureUrl,
+    pictureUrl: `${CMS_URL}${product.picture.url}`,
   };
 }
 
-export async function getProduct(id:string): Promise<Product> {
+export async function getProduct(id:string): Promise<any> {
   // const response = await fetch(`http://localhost:1337/products/`);
   const product = await fetchJson(`${CMS_URL}/products/${id}`);
 //   const products = await fetchJson(`${CMS_URL}/products`);
-return stripProduct( product)
+  console.log(stripProduct(product))
+return stripProduct(product)
 }
