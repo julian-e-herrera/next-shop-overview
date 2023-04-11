@@ -1,4 +1,4 @@
-//Option 1b:using in this case of uses
+//Option 1b:fetch products on the server side (ISR)
 
 import Head from 'next/head'
 
@@ -6,7 +6,6 @@ import Title from '@/components/Title'
 import { ReactNode } from 'react'
 import { GetStaticProps } from 'next'
 import { getProducts } from '@/lib/products'
-import Link from 'next/link'
 
 // const products = [
 //   { id: 1, title: 'title 1' },
@@ -45,9 +44,7 @@ export default function Home(props: HomePageProps) {
         <Title>Next Shop</Title>
         <ul>
           {products.map((product: Product): ReactNode => {
-            return (<li key={product.id}>
-              <Link href={`/products/${product.id}`}>{product.title}</Link>
-            </li>)
+            return (<li key={product.id}>{product.title}</li>)
 
           })}
         </ul>

@@ -1,12 +1,11 @@
-//Option 1b:using in this case of uses
+//Option 1c:fetch products on the server side (SSR)
 
 import Head from 'next/head'
 
 import Title from '@/components/Title'
 import { ReactNode } from 'react'
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { getProducts } from '@/lib/products'
-import Link from 'next/link'
 
 // const products = [
 //   { id: 1, title: 'title 1' },
@@ -20,13 +19,13 @@ interface HomePageProps {
   products: Product[];
 }
 
-export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+export const getServerSideProps: GetServerSideProps<HomePageProps> = async () => {
 
   // const response = await fetch('http://localhost:1337/products');
   const products = await getProducts()
   return {
     props: { products },
-    revalidate: 30,
+
   }
 }
 
@@ -45,9 +44,7 @@ export default function Home(props: HomePageProps) {
         <Title>Next Shop</Title>
         <ul>
           {products.map((product: Product): ReactNode => {
-            return (<li key={product.id}>
-              <Link href={`/products/${product.id}`}>{product.title}</Link>
-            </li>)
+            return (<li key={product.id}>{product.title}</li>)
 
           })}
         </ul>
