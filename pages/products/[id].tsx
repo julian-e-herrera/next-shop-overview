@@ -5,6 +5,8 @@ import { ParsedUrlQuery } from 'querystring'
 import { ApiError } from '@/lib/api'
 import Image from 'next/image';
 import Page from '@/components/Page'
+import { useUser } from '@/hooks/user'
+import AddToCartWidget from '@/components/AddToCartWidget'
 
 
 
@@ -52,6 +54,7 @@ export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams>
 }
 
 const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
+  const user = useUser()
   return (
     <Page title={product.title}>
       <div className=' flex flex-col lg:flex-row'>
@@ -59,6 +62,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
         <div className=' py-4 lg:px-6'>
           <p className='text-sm'>{product.description}</p>
           <p className='text-lg font-bold mt-2'>{product.price}</p>
+          {user && <AddToCartWidget productId={product.id} />}
         </div>
       </div>
     </Page>

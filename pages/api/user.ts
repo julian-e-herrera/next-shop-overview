@@ -1,6 +1,5 @@
 import { fetchJson } from '@/lib/api'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import cookie from 'cookie'
 
 const { CMS_URL } = process.env
 export default async function handlerUser(
