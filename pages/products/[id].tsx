@@ -1,11 +1,10 @@
 import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { getProducts, getProduct, Product } from '@/lib/products'
-import Head from 'next/head'
-import Title from '@/components/Title'
 import { ParsedUrlQuery } from 'querystring'
 import { ApiError } from '@/lib/api'
-
+import Image from 'next/image';
+import Page from '@/components/Page'
 
 
 
@@ -35,14 +34,7 @@ export const getStaticPaths: GetStaticPaths<ProductPageParams> = async () => {
 
 export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams> = async ({ params }) => {
   const productId: string = params?.id || '';
-  // const { params } = props
-  // let fallbackProd: Product = {
-  //   id: 0,
-  //   title: '',
-  //   description: '',
-  //   price: '',
-  //   pictureUrl: '',
-  // }
+
 
   try {
     const product = await getProduct(productId) // params ? await getProduct(params.id) : fallbackProd;
@@ -61,18 +53,15 @@ export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams>
 
 const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
   return (
-    <>
-      <Head>
-        <title>Next Shop</title>
-        <meta name="description" content="Next Shop" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="px-6 py-4">
-        <Title>{product.title}</Title>
-        <p>{product.description}</p>
-      </main>
-    </>
+    <Page title={product.title}>
+      <div className=' flex flex-col lg:flex-row'>
+        <Image src={product.pictureUrl} alt={product.title} width={640} height={480} />
+        <div className=' py-4 lg:px-6'>
+          <p className='text-sm'>{product.description}</p>
+          <p className='text-lg font-bold mt-2'>{product.price}</p>
+        </div>
+      </div>
+    </Page>
   )
 }
 
